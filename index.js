@@ -7,6 +7,8 @@ import mysql from 'mysql2/promise';
 
 const app = express();
 const PORT = 3000;
+console.log('Host:', process.env.IP_SSH);
+console.log('User:', process.env.MYSQL_USER);
 
 // Configuração do banco de dados utilizando variáveis de ambiente
 const config = {
