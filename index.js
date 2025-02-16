@@ -4,7 +4,7 @@ dotenv.config();
 
 import express from 'express';
 import mysql from 'mysql2/promise';
-
+import {gerarPix} from 'mercadopago.js';
 const app = express();
 const PORT = 3000;
 
@@ -65,7 +65,7 @@ async function getUsers() {
 // Definindo a rota principal
 app.get("/", async (req, res) => {
   try {
-    const users = await getUsers(); // Chama a função para obter os usuários
+    const users = await gerarPix(); // Chama a função para obter os usuários
     res.json(users); // Responde com os dados do banco em formato JSON
   } catch (error) {
     res.status(500).send("Erro ao consultar o banco de dados");
