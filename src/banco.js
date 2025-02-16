@@ -4,7 +4,7 @@ dotenv.config();
 
 import express from 'express';
 import mysql from 'mysql2/promise';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 
 const app = express();
 const PORT = 3000;
