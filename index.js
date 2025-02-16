@@ -7,13 +7,15 @@ import mysql from 'mysql2/promise';
 
 const app = express();
 const PORT = 3000;
+console.log('Host:', process.env.IP_SSH);
+console.log('User:', process.env.MYSQL_USER);
 
 // Configuração do banco de dados utilizando variáveis de ambiente
 const config = {
-  host: "157.254.54.238", // Host do banco de dados
-  user: "well", // Usuário do banco de dados
-  password:  "#+zvM25-7Xz4", // Senha do banco de dados
-  database: "iptv", // Banco de dados
+  host: process.env.IP_SSH, // Host do banco de dados
+  user: process.env.MYSQL_USER, // Usuário do banco de dados
+  password: process.env.MYSQL_PASSWORD, // Senha do banco de dados
+  database: process.env.MYSQL_DATABASE, // Banco de dados
 };
 
 
