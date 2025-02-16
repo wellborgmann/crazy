@@ -1,46 +1,43 @@
-// Importando o dotenv para carregar variáveis de ambiente
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
-import {criarPix} from './src/mercadopago.js';
-import {verifyGoogleToken} from './src/google.js';
+import { criarPix } from './src/mercadopago.js';
+import { verifyGoogleToken } from './src/google.js';
 import {
-    testing,
-    userInfo,
-    registerAccount,
-    getPayment,
-    db_userssh,
-    resetPasswordDB,
-    resetPasswordInfo,
-    userUpdatePass,
-    authenticateUser,
-    updatePayment,
-    atualizarSenha,
-    atualizarTimestamp,
-    insertPayment,
-    removerPagamentoAprovado
+  testing,
+  userInfo,
+  registerAccount,
+  getPayment,
+  db_userssh,
+  resetPasswordDB,
+  resetPasswordInfo,
+  userUpdatePass,
+  authenticateUser,
+  updatePayment,
+  atualizarSenha,
+  atualizarTimestamp,
+  insertPayment,
+  removerPagamentoAprovado
 } from './src/banco.js';
-const app = express();
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import session from 'express-session';
 import * as zlib from 'zlib';
 import bcrypt from 'bcrypt';
 import { Server } from 'socket.io';
 import { createServer } from 'http';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const app = express();
 const PORT = 3000;
-
-
 
 const server = createServer(app); // Criando o servidor HTTP para usar com o Express
 const io = new Server(server);
 
-
+// Configurações de caminho
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 app.use(express.json()); 
-
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({ 
@@ -48,16 +45,6 @@ app.use(session({
   resave: false, 
   saveUninitialized: true 
 }));
-function checkAuth(req, res, next) {
-    console.log("Usuário está conectado:", req.session.userEmail);
-    if (req.session.userEmail) {
-      next();
-    } else {
-      console.log("Usuário não está conectado, redirecionando para /login");
-      res.redirect("/login");
-    }
-  }
-  
 
 // Definindo a rota principal
 app.get("/", async (req, res) => {
