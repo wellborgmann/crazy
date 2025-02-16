@@ -32,38 +32,26 @@ async function connectToDatabase() {
 // Chama a função de conexão
 connectToDatabase();
 
-// Reconexão em caso de perda de conexão
-connection?.on('error', async (err) => {
-  if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-    console.log('Conexão perdida. Tentando reconectar...');
-    await connectToDatabase();
-  } else {
-    console.error('Erro na conexão:', err.message);
-  }
-});
-
 // Exemplo de consulta ao banco
 async function getUsers() {
   try {
     const [rows] = await connection.execute('SELECT * FROM oauth');
-    console.log(rows);
+    return rows;
   } catch (err) {
     console.error('Erro ao consultar o banco:', err.message);
+    throw err; // Lançando erro para que o chamador possa tratá-lo
   }
 }
 
-
-
 // Definindo a rota principal
-app.get("/",async (req, res) => {
-  try{
-      const user = await getUsers("wellborgmann@gamail.com);
-  res.send("Servidor Express com ESModules está rodando!");
-  }catch(error){
-     res.send("erro");
-console.log(error);
+app.get("/", async (req, res) => {
+  try {
+    const users = await getUsers(); // Chamando a função de consulta ao banco
+    res.send("Servidor Express com ESModules está rodando!");
+  } catch (error) {
+    res.status(500).send("Erro ao acessar o banco de dados");
+    console.error(error);
   }
-
 });
 
 // Iniciando o servidor Express
