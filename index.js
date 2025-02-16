@@ -45,6 +45,7 @@ app.use(session({
   resave: false, 
   saveUninitialized: true 
 }));
+app.use('/socket.io', express.static(path.join(__dirname, 'node_modules', 'socket.io-client', 'dist')));
 
 function checkAuth(req, res, next) {
   console.log("Usuário está conectado:", req.session.userEmail);
