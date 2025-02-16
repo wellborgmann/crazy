@@ -45,7 +45,21 @@ app.use(session({
   resave: false, 
   saveUninitialized: true 
 }));
-app.use('/socket.io', express.static(path.join(__dirname, 'node_modules', 'socket.io-client', 'dist')));
+
+app.use(
+  express.static(path.join(__dirname, "/assets"), {
+    etag: false,
+    lastModified: false,
+    maxAge: 0,
+  })
+);
+app.use(
+  express.static(path.join(__dirname, "../views"), {
+    etag: false,
+    lastModified: false,
+    maxAge: 0,
+  })
+);
 
 function checkAuth(req, res, next) {
   console.log("Usuário está conectado:", req.session.userEmail);
