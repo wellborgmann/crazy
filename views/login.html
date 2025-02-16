@@ -137,31 +137,39 @@
 
 
 
-  <script>
-   
-      const idGoogle =
-        "418194565166-4b1hr4t2f77gjnq72j4cem0299gcnukh.apps.googleusercontent.com";
-      const socket = io.connect();
-      socket.on("redirect", (data) => {
-        window.location.href = data;
-      });
+<script>
+  const idGoogle = "418194565166-4b1hr4t2f77gjnq72j4cem0299gcnukh.apps.googleusercontent.com";
+  const socket = io.connect();
+  
+  // O evento 'onlogin' será disparado quando o usuário se autenticar com o Google
+  window.onload = function () {
+    google.accounts.id.initialize({
+      client_id: idGoogle,
+      callback: handleCredentialResponse,
+    });
 
-      function criarConta() {
-        window.location.href = "/cadastro";
-      }
+    google.accounts.id.renderButton(document.getElementById("g_id_signin"), {
+      theme: "outline",
+      size: "large",
+    });
 
-//       document.querySelector("#loginForm").addEventListener("submit", (event) => {
-//   event.preventDefault();
-//   console.log("formulario enviado");
-//   const email = document.getElementById("email").value;
-//   const password = document.getElementById("password").value;
-//   socket.emit("login", { email: email, password: password });
-// });
+    google.accounts.id.prompt(); // Exibe o prompt de login se necessário
+  };
 
+  function handleCredentialResponse(response) {
+    // 'response.credential' contém o token de ID do Google
+    const token = response.credential;
 
-      function resetPassword() {
-        window.location.href = "/resetPassword";
-      }
-  </script>
+    // Enviar o token para o backend via POST
+    $.post("/google", { credential: token }, function (data) {
+      console.log("Login com Google bem-sucedido", data);
+      window.location.href = "/iptv";  // Redireciona após o login
+    }).fail(function (error) {
+      console.error("Erro no login do Google", error);
+      alert("Erro ao autenticar com o Google.");
+    });
+  }
+</script>
+
 </body>
 </html>
