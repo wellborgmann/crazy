@@ -53,6 +53,7 @@ app.get("/iptv",checkAuth, (req, res) => {
   
 
   app.post("/oauth", async (req, res) => {
+      console.log(req);
     let { email, password } = req.body;
     try {
       console.log("MINHA SENHA ", password);
