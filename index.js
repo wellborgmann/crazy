@@ -46,6 +46,16 @@ app.use(session({
   saveUninitialized: true 
 }));
 
+function checkAuth(req, res, next) {
+  console.log("Usuário está conectado:", req.session.userEmail);
+  if (req.session.userEmail) {
+    next();
+  } else {
+    console.log("Usuário não está conectado, redirecionando para /login");
+    res.redirect("/login");
+  }
+}
+
 // Definindo a rota principal
 app.get("/", async (req, res) => {
   res.send("funcionando");
