@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 // Carregar variáveis de ambiente
 dotenv.config();
 
-dotenv.config();
 const chave = process.env.BRICKS_ACCESS_TOKEN;
 
 const client = new MercadoPagoConfig({
