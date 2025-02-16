@@ -7,6 +7,7 @@ import mysql from 'mysql2/promise';
 
 const app = express();
 const PORT = 3000;
+
 console.log('Host:', process.env.IP_SSH);
 console.log('User:', process.env.MYSQL_USER);
 
@@ -17,7 +18,6 @@ const config = {
   password: process.env.MYSQL_PASSWORD, // Senha do banco de dados
   database: process.env.MYSQL_DATABASE, // Banco de dados
 };
-
 
 // Função para criar a conexão
 let connection;
@@ -55,7 +55,7 @@ async function getUsers() {
   }
   try {
     const [rows] = await connection.execute('SELECT * FROM oauth');
-    return rows;  // Retorna os dados para serem usados na resposta
+    return rows; // Retorna os dados para serem usados na resposta
   } catch (err) {
     console.error('Erro ao consultar o banco:', err.message);
     return [];
@@ -69,7 +69,7 @@ app.get("/", async (req, res) => {
     res.json(users); // Responde com os dados do banco em formato JSON
   } catch (error) {
     res.status(500).send("Erro ao consultar o banco de dados");
-    console.log(error);
+    console.error(error);
   }
 });
 
