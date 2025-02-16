@@ -4,7 +4,7 @@ dotenv.config();
 
 import express from 'express';
 import mysql from 'mysql2/promise';
-import {criarPix} from './mercadopago.js';
+
 const app = express();
 const PORT = 3000;
 
