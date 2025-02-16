@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <title>Apollo TV</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        body, html{
+          width: 100%;
+          height: 100%;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px 0px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            display: flex
+;
+    flex-direction: column;
+    align-items: center;
+        }
+
+        .login-container h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #00d4ff;
+        }
+
+        .login-container input {
+          max-width: 400px;
+    width: 90%;
+    padding: 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.2);
+          
+    font-size: 1rem;
+    outline: none;
+        }
+
+        .login-container input::placeholder {
+            color: #bfbfbf;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #00d4ff;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-container button:hover {
+            background: #00a3cc;
+        }
+
+        .login-container .link {
+            margin-top: 20px;
+            display: block;
+            font-size: 0.9rem;
+            color: #bfbfbf;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .login-container .link:hover {
+            color: #fff;
+        }
+
+        .g_id_signin{
+          margin-top: 10px;
+          width: 100%;
+        }
+
+        form{
+          width: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Apollo TV</h1>
+        <form  id="loginForm"  action="/oauth" method="POST">
+            <input type="text"   name="email"   id="email" placeholder="Username or Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <div
+            class="g_id_signin"
+            data-type="standard"
+            data-shape="rectangular"
+            data-theme="outline"
+            data-text="continue_with"
+            data-size="large"
+            data-locale="pt-BR"
+            data-logo_alignment="center"
+            data-width="90%"
+            data-max-width="400"
+          ></div>
+          <div
+            id="g_id_onload"
+            data-client_id="418194565166-4b1hr4t2f77gjnq72j4cem0299gcnukh.apps.googleusercontent.com"
+            data-context="signin"
+            data-ux_mode="popup"
+            data-login_uri="https://crazy-green.vercel.app/google"
+            data-auto_prompt="true"
+            data-width="100%"
+          ></div>
+        </form>
+    
+    </div>
+
+
+
+  <script>
+   
+      const idGoogle =
+        "418194565166-4b1hr4t2f77gjnq72j4cem0299gcnukh.apps.googleusercontent.com";
+      const socket = io.connect();
+      socket.on("redirect", (data) => {
+        window.location.href = data;
+      });
+
+      function criarConta() {
+        window.location.href = "/cadastro";
+      }
+
+//       document.querySelector("#loginForm").addEventListener("submit", (event) => {
+//   event.preventDefault();
+//   console.log("formulario enviado");
+//   const email = document.getElementById("email").value;
+//   const password = document.getElementById("password").value;
+//   socket.emit("login", { email: email, password: password });
+// });
+
+
+      function resetPassword() {
+        window.location.href = "/resetPassword";
+      }
+  </script>
+</body>
+</html>
