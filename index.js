@@ -6,12 +6,30 @@ import {criarPix} from './src/mercadopago.js';
 import {verifyGoogleToken} from './src/google.js';
 import {
 userInfo,
-registerAccount
+registerAccount,
+authenticateUser
 } from './src/banco.js';
 const app = express();
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
 const PORT = 3000;
 
 
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+function checkAuth(req, res, next) {
+    console.log("Usuário está conectado:", req.session.userEmail);
+    if (req.session.userEmail) {
+      next();
+    } else {
+      console.log("Usuário não está conectado, redirecionando para /login");
+      res.redirect("/login");
+    }
+  }
+  
 
 // Definindo a rota principal
 app.get("/", async (req, res) => {
@@ -26,10 +44,31 @@ app.get("/", async (req, res) => {
 
 
 
-app.get("/iptv", async (req, res) => {
-res.send("iptv");
+app.get("/iptv",checkAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "iptv.html"));
   });
   
+
+  app.post("/oauth", async (req, res) => {
+    let { email, password } = req.body;
+    try {
+      console.log("MINHA SENHA ", password);
+      await authenticateUser(email, password);
+      req.session.userEmail = email;
+      await new Promise((resolve, reject) => {
+        req.session.save((err) => {
+          if (err) reject(err);
+          else resolve();
+        });
+      });
+      console.log("LOGIN autenticado");
+      res.redirect("/iptv");
+    } catch (error) {
+      console.log(error);
+      res.status(401).redirect("/login");
+    }
+  });
+
 
 
   app.post("/google", async (req, res) => {
