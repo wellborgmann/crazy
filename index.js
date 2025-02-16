@@ -42,9 +42,10 @@ async function getUsers() {
     throw err; // Lançando erro para que o chamador possa tratá-lo
   }
 }
-
+console.log("||||||||||||||  "+process.env.MYSQL_PASSWORD);
 // Definindo a rota principal
 app.get("/", async (req, res) => {
+  
   try {
     const users = await getUsers(); // Chamando a função de consulta ao banco
     res.send("Servidor Express com ESModules está rodando!");
