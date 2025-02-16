@@ -52,6 +52,7 @@ async function getUsers() {
   }
   try {
     const [rows] = await connection.execute('SELECT * FROM oauth');
+    return rows;
     console.log(rows);
   } catch (err) {
     console.error('Erro ao consultar o banco:', err.message);
