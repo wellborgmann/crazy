@@ -31,13 +31,7 @@ const app = express();
 const PORT = 3000;
 
 const server = createServer(app); // Criando o servidor HTTP para usar com o Express
-const io = new Server(server, {
-  cors: {
-    origin: "*", // ou substitua pelo domínio do seu frontend
-    methods: ["GET", "POST"]
-  }
-});
-
+const io = new Server(server);
 
 // Configurações de caminho
 const __filename = fileURLToPath(import.meta.url);
@@ -150,9 +144,10 @@ app.post("/google", async (req, res) => {
 
 
 // Iniciando o servidor Express
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+server.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
+
 
 
 
@@ -169,6 +164,8 @@ io.use((socket, next) => {
   }
   next();
 });
+
+
 io.on("connection", (socket) => {
   // Obter faturas do usuário conectado
   console.log("CLIENTE CONECTADO");
