@@ -31,7 +31,14 @@ const app = express();
 const PORT = 3000;
 
 const server = createServer(app); // Criando o servidor HTTP para usar com o Express
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*", // Alterar para o domínio correto do frontend se necessário
+    methods: ["GET", "POST"]
+  },
+  transports: ["polling"] // Força o uso de polling
+});
+
 
 // Configurações de caminho
 const __filename = fileURLToPath(import.meta.url);
