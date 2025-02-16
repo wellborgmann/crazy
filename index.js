@@ -26,9 +26,14 @@ import { fileURLToPath } from 'url';
 import session from 'express-session';
 import * as zlib from 'zlib';
 import bcrypt from 'bcrypt';
-
+import { Server } from 'socket.io';
 
 const PORT = 3000;
+
+
+
+const server = createServer(app); // Criando o servidor HTTP para usar com o Express
+const io = new Server(server);
 
 
 const __filename = fileURLToPath(import.meta.url);
