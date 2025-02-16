@@ -62,7 +62,7 @@ async function getUsers() {
 app.get("/", async (req, res) => {
   try {
     const user = await getUsers(); // Corrigido: Removido o parâmetro desnecessário
-    res.send("Servidor Express com ESModules está rodando!");
+    res.send(user);
   } catch (error) {
     res.send("Erro");
     console.log(error);
