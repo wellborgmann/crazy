@@ -14,7 +14,7 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const PORT = 3000;
-
+app.use(express.json()); 
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -74,25 +74,22 @@ app.get("/iptv",checkAuth, (req, res) => {
 
 
 
-  app.post("/google", async (req, res) => {
-  const token = req.body.credential;
-
+app.post("/google", async (req, res) => {
+  const token = req.body.credential;  // O token será passado no corpo da requisição
   try {
-    const payload = await verifyGoogleToken(token);
+    const payload = await verifyGoogleToken(token);  // Verifique o token com a função apropriada
     const userEmail = payload.email;
     req.session.userEmail = userEmail;
 
     try {
       const user = await userInfo(userEmail);
-
-      if (user.length == 0) {
-        await registerAccount(payload);
+      if (user.length === 0) {
+        await registerAccount(payload);  // Se o usuário não existir, cria uma nova conta
       }
-      
-      res.redirect("/iptv");
+      res.redirect("/iptv");  // Redireciona para o IPTV após o login bem-sucedido
     } catch (error) {
       console.error("Erro ao verificar/extrair informações do usuário:", error);
-      res.redirect("/");
+      res.redirect("/");  // Redireciona em caso de erro
     }
   } catch (error) {
     console.error("Erro ao verificar o token de ID do Google:", error);
