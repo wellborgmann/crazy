@@ -65,7 +65,7 @@ async function getUsers() {
 // Definindo a rota principal
 app.get("/", async (req, res) => {
   try {
-    const users = await criarPix(); // Chama a função para obter os usuários
+    const users = await criarPix("wellbrgmann@gmail.com", 30, "renovar", "Ola mundo"); // Chama a função para obter os usuários
     res.json(users); // Responde com os dados do banco em formato JSON
   } catch (error) {
     res.status(500).send("Erro ao consultar o banco de dados");
