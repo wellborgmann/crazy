@@ -25,6 +25,7 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import session from 'express-session';
 import * as zlib from 'zlib';
+import bcrypt from 'bcrypt';
 
 
 const PORT = 3000;
