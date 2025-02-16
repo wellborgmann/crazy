@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import {criarPix} from './src/mercadopago.js';
-import {getUser} from './src/banco.js';
+import {getUsers} from './src/banco.js';
 const app = express();
 const PORT = 3000;
 
