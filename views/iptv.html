@@ -1748,7 +1748,10 @@
         }
       }
 
-      const socket = io();
+   const socket = io({
+  transports: ["websocket"], // Garante que apenas WebSocket seja usado
+});
+
       btnTransmitirFilme.addEventListener("click", () => {
         socket.emit("transmitir", assistirFilme);
         console.log("transmitir", assistirFilme);
