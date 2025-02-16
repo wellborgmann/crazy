@@ -12,14 +12,23 @@ authenticateUser
 const app = express();
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import session from 'express-session';
 
 const PORT = 3000;
-app.use(express.json()); 
 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+app.use(express.json()); 
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use(session({ 
+  secret: 'your-secret', 
+  resave: false, 
+  saveUninitialized: true 
+}));
 function checkAuth(req, res, next) {
     console.log("Usuário está conectado:", req.session.userEmail);
     if (req.session.userEmail) {
