@@ -62,6 +62,6 @@ async function getUsers() {
   }
 }
 
-module.exports = {
+export {
     getUsers
 }
