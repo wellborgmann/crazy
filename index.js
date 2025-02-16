@@ -47,6 +47,9 @@ app.get("/", async (req, res) => {
 app.get("/iptv",checkAuth, (req, res) => {
     res.sendFile(path.join(__dirname, "views", "iptv.html"));
   });
+  app.get("/login", (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "login.html"));
+  });
   
 
   app.post("/oauth", async (req, res) => {
