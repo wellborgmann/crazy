@@ -42,13 +42,14 @@ function checkAuth(req, res, next) {
 
 // Definindo a rota principal
 app.get("/", async (req, res) => {
-  try {
-    const users = await criarPix("wellbrgmann2@gmail.com", 30, "renovar", "Ok"); // Chama a função para obter os usuários
-    res.json(users); // Responde com os dados do banco em formato JSON
-  } catch (error) {
-    res.status(500).send("Erro ao consultar o banco de dados");
-    console.error(error);
-  }
+  res.send("funcionando");
+  // try {
+  //   const users = await criarPix("wellbrgmann2@gmail.com", 30, "renovar", "Ok"); // Chama a função para obter os usuários
+  //   res.json(users); // Responde com os dados do banco em formato JSON
+  // } catch (error) {
+  //   res.status(500).send("Erro ao consultar o banco de dados");
+  //   console.error(error);
+  // }
 });
 
 
